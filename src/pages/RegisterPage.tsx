@@ -1,19 +1,10 @@
 import { Eye, PenLine } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
-import type { LoginDataType } from "./LoginPage";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
-
-export type UserType = "Auther" | "Reader";
-
-export type RegisterDataType = LoginDataType & {
-    name: string;
-    confirmPassword: string;
-    role: UserType;
-    createdAt: Date;
-};
+import type { RegisterDataType } from "../types";
 
 const RegisterPage = () => {
     const {

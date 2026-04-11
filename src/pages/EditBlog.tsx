@@ -1,58 +1,26 @@
 import { ArrowLeft, Save, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import type { BlogDataType } from "../types";
-import { v4 as uuidv4 } from "uuid";
-import { useAuth } from "../hooks/useAuth";
-import React, { useState } from "react";
-import { useBlog } from "../hooks/useBlog";
+import { useLocation, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
-const NewArticlePage = () => {
+const EditBlog = () => {
     const navigate = useNavigate();
-    const { loggedInUser } = useAuth();
-    const { setBlogpost } = useBlog();
 
-    const { register, handleSubmit, reset } = useForm<BlogDataType>();
-
-    const [input, setInput] = useState<string>("");
+    const [input, setInput] = useState("");
     const [tagInput, setTagInput] = useState<string[]>([]);
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
+    const { register, handleSubmit, setValue } = useForm<BlogDataType>();
+    const { state } = useLocation();
 
-            if (tagInput.length > 4) return;
-            if (!input.trim()) return;
-
-            setTagInput((p) => [...p, input.trim()]);
-            setInput("");
+    useEffect(() => {
+        if (state) {
+            setValue("title", state.title);
+            setValue("excerpt", state.excerpt);
+            setValue("content", state.content);
+            setValue("tags", state.tags || []);
         }
-    };
-
-    const authorName = loggedInUser.name || "unknown";
-
-    const handleSave = (data: BlogDataType, status: "True" | "False") => {
-        const formData = {
-            ...data,
-            id: uuidv4(),
-            authorName: authorName,
-            tags: tagInput,
-            published: status,
-            updatedAt: new Date().toString().split("T")[0],
-        };
-        console.log(formData);
-        setBlogpost((p) => [...p, formData]);
-        reset();
-        navigate("/dashboard");
-    };
-
-    const onDraft = (data: BlogDataType) => {
-        handleSave(data, "False");
-    };
-
-    const onPublish = (data: BlogDataType) => {
-        handleSave(data, "True");
-    };
+    }, [state]);
 
     return (
         <div className="grid grid-rows-[auto_1fr]">
@@ -127,9 +95,6 @@ const NewArticlePage = () => {
                             type="text"
                             placeholder="Add Tags (Press Enter to Add)"
                             className="w-full rounded-md border border-gray p-1"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
                         />
                         <p className="mt-1 text-sm text-gray">
                             Add up to 5 tags to help readers find your article
@@ -138,18 +103,12 @@ const NewArticlePage = () => {
 
                     {/* buttons */}
                     <div className="flex items-center justify-end gap-5">
-                        <div
-                            onClick={handleSubmit(onDraft)}
-                            className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-300 p-2 px-3 hover:bg-secondary hover:text-white"
-                        >
+                        <div className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-300 p-2 px-3 hover:bg-secondary hover:text-white">
                             <Save size={22} />
                             <button>Save as Draft</button>
                         </div>
 
-                        <div
-                            onClick={handleSubmit(onPublish)}
-                            className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary p-2 px-3 text-white"
-                        >
+                        <div className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary p-2 px-3 text-white">
                             <Send size={22} />
                             <button>Publish</button>
                         </div>
@@ -160,4 +119,4 @@ const NewArticlePage = () => {
     );
 };
 
-export default NewArticlePage;
+export default EditBlog;

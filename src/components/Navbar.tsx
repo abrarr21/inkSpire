@@ -11,11 +11,9 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const userExist = !!loggedInUser;
-    // console.log("isUser->", userExist);
 
     const isAuthor =
         userExist && Object.values(loggedInUser).some((p) => p === "Author");
-    console.log(isAuthor);
 
     const onLogout = () => {
         localStorage.removeItem("blog-current-user");
@@ -54,10 +52,10 @@ const Navbar = () => {
                             <p className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white">
                                 {loggedInUser.email?.charAt(0).toUpperCase()}
                             </p>
-                            <button>{loggedInUser.name}</button>
+                            <button>{loggedInUser.name?.toUpperCase()}</button>
 
                             {isOpen && (
-                                <div className="absolute top-full right-1 w-56 rounded-lg border border-gray-300 bg-(--bg-whitecanvas) p-2">
+                                <div className="absolute top-full right-1 w-40 rounded-lg border border-gray-300 bg-(--bg-whitecanvas) p-2 md:w-56">
                                     <div className="mt-1 text-black">
                                         <h1>{loggedInUser.name}</h1>
                                         <h3 className="text-xs text-gray">
@@ -67,20 +65,20 @@ const Navbar = () => {
                                             {loggedInUser.role}
                                         </p>
                                     </div>
-                                    <hr className="my-1 text-gray" />
+                                    <hr className="my-1 text-gray-400" />
                                     {isAuthor && (
                                         <>
                                             <div
-                                                className="flex items-center gap-3 rounded-lg px-2 py-1 text-sm text-black hover:bg-secondary"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
+                                                className="flex items-center gap-3 rounded-lg px-2 py-1 text-sm text-black hover:bg-secondary hover:text-white"
+                                                onClick={() =>
+                                                    navigate("/dashboard")
+                                                }
                                             >
                                                 <LayoutGrid size={14} />
                                                 <h1>Dashboard</h1>
                                             </div>
 
-                                            <hr className="my-1 text-gray" />
+                                            <hr className="my-1 text-gray-400" />
                                         </>
                                     )}
                                     <div

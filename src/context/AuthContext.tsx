@@ -1,7 +1,6 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { createContext, useState } from "react";
-import type { RegisterDataType } from "../pages/RegisterPage";
-import type { LoginDataType } from "../pages/LoginPage";
+import { createContext, useEffect, useState } from "react";
+import type { LoginDataType, RegisterDataType } from "../types";
 
 type AuthContextDataType = {
     registeredUser: RegisterDataType[];
@@ -24,6 +23,7 @@ export const AuthContext = ({ children }: { children: ReactNode }) => {
         const state = localStorage.getItem("blog-current-user");
         return state ? JSON.parse(state) : undefined;
     });
+
     return (
         <Auth.Provider
             value={{

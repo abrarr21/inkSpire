@@ -19,6 +19,12 @@ const ProtectedRoute = () => {
         return <Navigate to={"/login"} replace />;
     }
 
+    if (loggedInUser) {
+        if (loggedInUser.role === "Reader") {
+            return <Navigate to={"/"} replace />;
+        }
+    }
+
     return <Outlet />;
 };
 

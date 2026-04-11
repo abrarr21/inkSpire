@@ -6,6 +6,9 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import AuthProtected from "./AuthProtected";
 import ProtectedRoute from "./ProtectedRoute";
+import NewArticlePage from "../pages/NewArticlePage";
+import BlogViewPage from "../pages/BlogViewPage";
+import EditBlog from "../pages/EditBlog";
 
 const router = createBrowserRouter([
     {
@@ -16,11 +19,11 @@ const router = createBrowserRouter([
                 element: <App />,
                 children: [
                     {
-                        path: "/login",
+                        path: "login",
                         element: <LoginPage />,
                     },
                     {
-                        path: "/register",
+                        path: "register",
                         element: <RegisterPage />,
                     },
                 ],
@@ -29,19 +32,31 @@ const router = createBrowserRouter([
     },
 
     {
-        element: <ProtectedRoute />,
+        path: "/",
+        element: <App />,
         children: [
             {
-                path: "/",
-                element: <App />,
+                index: true,
+                element: <Home />,
+            },
+            {
+                path: "/blog/:id",
+                element: <BlogViewPage />,
+            },
+            {
+                element: <ProtectedRoute />,
                 children: [
-                    {
-                        index: true,
-                        element: <Home />,
-                    },
                     {
                         path: "dashboard",
                         element: <DashboardPage />,
+                    },
+                    {
+                        path: "dashboard/new",
+                        element: <NewArticlePage />,
+                    },
+                    {
+                        path: "dashboard/edit/:id",
+                        element: <EditBlog />,
                     },
                 ],
             },

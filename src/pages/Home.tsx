@@ -1,6 +1,11 @@
 import ContentCard from "../components/ContentCard";
+import { useBlog } from "../hooks/useBlog";
 
 const Home = () => {
+    const { blogpost } = useBlog();
+    // console.log(blogpost);
+    const publishedBlogs = blogpost.filter((elem) => elem.published === "True");
+
     return (
         <div className="mx-auto mt-8 grid grid-rows-[auto_1fr]">
             <div className="text-center">
@@ -18,20 +23,16 @@ const Home = () => {
                     <h2 className="text-[clamp(1.3rem,4vw,1.5rem)] font-semibold">
                         Latest Articles
                     </h2>
-                    <h4 className="text-sm text-gray-600">3 Articles</h4>
+                    <h4 className="text-sm text-gray-600">
+                        {publishedBlogs.length} Articles
+                    </h4>
                 </div>
 
                 {/* cards */}
                 <div className="mt-4 grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
-                    <ContentCard />
+                    {publishedBlogs.map((elem) => {
+                        return <ContentCard key={elem.id} post={elem} />;
+                    })}
                 </div>
             </div>
         </div>
