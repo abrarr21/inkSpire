@@ -22,6 +22,7 @@ export const blogs: BlogDataType[] = [
         published: "True",
         tags: ["typescript", "javascript"],
         createdAt: new Date().toString().split("T")[0],
+        updatedAt: new Date().toString().split("T")[0],
     },
     {
         id: "3",

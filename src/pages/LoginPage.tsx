@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import type { LoginDataType } from "../types";
+import { setLocalStorage } from "../utils/localStorage";
 
 const LoginPage = () => {
     const {
@@ -44,7 +45,7 @@ const LoginPage = () => {
         };
 
         // console.log(" log user ->", logUser);
-        localStorage.setItem("blog-current-user", JSON.stringify(logUser));
+        setLocalStorage("blog-current-user", logUser);
         setLoggedInUser(logUser);
         toast.success("login success", {
             duration: 2000,
@@ -124,17 +125,17 @@ const LoginPage = () => {
                     <button
                         type="submit"
                         disabled={!isValid}
-                        className={`cursor-pointer rounded-xl bg-primary p-2 text-center text-white`}
+                        className={`${isValid ? "bg-primary text-white" : "bg-gray-400 text-black"} cursor-pointer rounded-xl p-2 text-center`}
                     >
                         Sign in
                     </button>
 
                     <div>
-                        <p className="text-center">
+                        <p className="text-center text-sm">
                             Don't have an accoutn?{" "}
                             <span
                                 onClick={() => navigate("/register")}
-                                className="cursor-pointer text-primary"
+                                className="cursor-pointer font-semibold text-primary"
                             >
                                 Register
                             </span>

@@ -7,7 +7,7 @@ const Home = () => {
     const publishedBlogs = blogpost.filter((elem) => elem.published === "True");
 
     return (
-        <div className="mx-auto mt-8 grid grid-rows-[auto_1fr]">
+        <div className="mx-auto mt-8 mb-5 grid grid-rows-[auto_1fr]">
             <div className="text-center">
                 <h1 className="text-[clamp(1.9rem,5vw,3.4rem)] font-bold">
                     Welcome to <span className="text-primary">InkSpire</span>

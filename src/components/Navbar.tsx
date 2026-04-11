@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { removeLocalStorage } from "../utils/localStorage";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Navbar = () => {
         userExist && Object.values(loggedInUser).some((p) => p === "Author");
 
     const onLogout = () => {
-        localStorage.removeItem("blog-current-user");
+        removeLocalStorage("blog-current-user");
         setLoggedInUser(null);
         toast.success("logout success", {
             duration: 3000,
@@ -26,7 +27,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 w-full border-b border-gray-300 backdrop-blur-md">
+        <nav className="sticky top-0 w-full border-b border-gray-300 shadow-md backdrop-blur-md">
             <div className="mx-auto flex h-full w-[min(60em,95%)] items-center justify-between">
                 <div
                     onClick={() => navigate("/")}

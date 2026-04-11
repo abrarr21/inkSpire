@@ -19,7 +19,7 @@ const DashboardPage = () => {
     const { loggedInUser } = useAuth();
     const { blogpost, setBlogpost } = useBlog();
 
-    const currentAuthor = loggedInUser.name;
+    const currentAuthor = loggedInUser?.name;
 
     const totalPublished = blogpost.filter(
         (elem) =>
@@ -61,7 +61,8 @@ const DashboardPage = () => {
                 <div>
                     <h3 className="text-3xl font-bold">Dashboard</h3>
                     <p className="mt-1.5 text-sm">
-                        Manage your Articles, {loggedInUser.name?.toUpperCase()}
+                        Manage your Articles,{" "}
+                        {loggedInUser?.name?.toUpperCase()}
                     </p>
                 </div>
                 <div
@@ -103,7 +104,7 @@ const DashboardPage = () => {
 
                 {/* card */}
                 {authorBlogs.length === 0 ? (
-                    <div className="mt-6 flex h-[35vh] flex-col items-center justify-center rounded-xl border border-gray bg-(--bg-whitecanvas) shadow-xl">
+                    <div className="mt-6 mb-5 flex h-[35vh] flex-col items-center justify-center rounded-xl border border-gray bg-(--bg-whitecanvas) shadow-xl">
                         <FileText size={52} className="text-gray-400" />
                         <h1 className="mt-4 mb-1 text-lg font-semibold">
                             No Article Yet

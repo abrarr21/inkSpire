@@ -29,7 +29,7 @@ const NewArticlePage = () => {
         }
     };
 
-    const authorName = loggedInUser.name || "unknown";
+    const authorName = loggedInUser?.name || "unknown";
 
     const handleSave = (data: BlogDataType, status: "True" | "False") => {
         const formData = {
@@ -40,7 +40,7 @@ const NewArticlePage = () => {
             published: status,
             updatedAt: new Date().toString().split("T")[0],
         };
-        console.log(formData);
+        // console.log(formData);
         setBlogpost((p) => [...p, formData]);
         reset();
         navigate("/dashboard");
@@ -63,7 +63,7 @@ const NewArticlePage = () => {
                 <ArrowLeft size={14} />
                 <h4>Back To Dashboard</h4>
             </div>
-            <div className="w-[90%] place-self-center rounded-xl border border-gray p-4">
+            <div className="mb-5 w-[90%] place-self-center rounded-xl border border-gray p-4">
                 <h1 className="text-xl font-semibold">Create New Article</h1>
                 <form className="mt-6">
                     {/* title */}

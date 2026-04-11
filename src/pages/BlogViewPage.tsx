@@ -10,7 +10,7 @@ const BlogViewPage = () => {
     const { blogpost } = useBlog();
 
     const singleBlog = blogpost.filter((elem) => elem.id === id);
-    console.log(singleBlog);
+    // console.log(singleBlog);
 
     return (
         <div className="mt-14 flex flex-col gap-2">

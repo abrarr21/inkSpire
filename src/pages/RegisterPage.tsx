@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import type { RegisterDataType } from "../types";
+import { setLocalStorage } from "../utils/localStorage";
 
 const RegisterPage = () => {
     const {
@@ -27,23 +28,31 @@ const RegisterPage = () => {
     const [showPasswordToggle, setShowPasswordToggle] = useState(false);
 
     const onCommit = (data: RegisterDataType) => {
-        const newUser = [...registeredUser, { ...data, createdAt: new Date() }];
-        localStorage.setItem("blog-users", JSON.stringify(newUser));
+        const createdUser = {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            confirmPassword: data.confirmPassword,
+            role: data.role,
+            createdAt: new Date(),
+        };
+        const newUser = [...registeredUser, createdUser];
+        setLocalStorage("blog-users", newUser);
         setRegisteredUser(newUser);
 
-        localStorage.setItem("blog-current-user", JSON.stringify(newUser));
-        setLoggedInUser(newUser[-1]);
+        setLocalStorage("blog-current-user", createdUser);
+        setLoggedInUser(createdUser);
         // console.log(newUser);
         toast.success("user created", {
             duration: 2000,
             position: "bottom-right",
         });
-        navigate("/login");
+        navigate("/");
         reset();
     };
 
     return (
-        <div className="mt-3 flex h-full w-full items-center justify-center md:mt-0">
+        <div className="mt-5 mb-5 flex h-full w-full items-center justify-center md:mt-3">
             <div className="w-[90%] rounded-xl border border-gray-300 px-6 py-5 md:w-1/2">
                 <div className="text-center">
                     <div className="inline-block rounded-full bg-primary p-3">
@@ -110,14 +119,9 @@ const RegisterPage = () => {
                                         message: "Minimum 6 chars",
                                     },
                                 })}
-                                type={showPasswordToggle ? "text" : "password"}
+                                type="password"
                                 placeholder="Enter your password"
                                 className="w-full p-2 focus:outline-none"
-                            />
-                            <Eye
-                                size={18}
-                                className="mr-2"
-                                onClick={() => setShowPasswordToggle((p) => !p)}
                             />
                         </div>
                         {errors.password && (
@@ -202,7 +206,7 @@ const RegisterPage = () => {
                     <button
                         type="submit"
                         disabled={!isValid}
-                        className={`cursor-pointer rounded-xl bg-primary p-2 text-center text-white`}
+                        className={`${isValid ? "bg-primary text-white" : "bg-gray-400 text-black"} cursor-pointer rounded-xl p-2 text-center`}
                     >
                         Sign up
                     </button>
@@ -212,7 +216,7 @@ const RegisterPage = () => {
                             Already have an accoutn?{" "}
                             <span
                                 onClick={() => navigate("/login")}
-                                className="cursor-pointer text-primary"
+                                className="cursor-pointer font-semibold text-primary"
                             >
                                 Login
                             </span>
