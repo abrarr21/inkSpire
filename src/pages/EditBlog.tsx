@@ -7,10 +7,9 @@ import { useEffect, useState } from "react";
 const EditBlog = () => {
     const navigate = useNavigate();
 
-    const [input, setInput] = useState("");
-    const [tagInput, setTagInput] = useState<string[]>([]);
+    const [tagInput] = useState<string[]>([]);
 
-    const { register, handleSubmit, setValue } = useForm<BlogDataType>();
+    const { register, setValue } = useForm<BlogDataType>();
     const { state } = useLocation();
 
     useEffect(() => {
@@ -20,7 +19,7 @@ const EditBlog = () => {
             setValue("content", state.content);
             setValue("tags", state.tags || []);
         }
-    }, [state]);
+    }, [state, setValue]);
 
     return (
         <div className="grid grid-rows-[auto_1fr]">

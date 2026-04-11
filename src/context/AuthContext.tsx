@@ -1,5 +1,5 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import type { LoginDataType, RegisterDataType } from "../types";
 
 type AuthContextDataType = {

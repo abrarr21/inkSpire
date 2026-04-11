@@ -13,7 +13,7 @@ const ProtectedRoute = () => {
                 position: "bottom-right",
             });
         }
-    }, []);
+    });
 
     if (!loggedInUser) {
         return <Navigate to={"/login"} replace />;
