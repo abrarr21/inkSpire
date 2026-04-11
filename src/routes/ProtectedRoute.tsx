@@ -13,7 +13,7 @@ const ProtectedRoute = () => {
                 position: "bottom-right",
             });
         }
-    });
+    }, [loggedInUser]);
 
     if (!loggedInUser) {
         return <Navigate to={"/login"} replace />;
@@ -21,6 +21,10 @@ const ProtectedRoute = () => {
 
     if (loggedInUser) {
         if (loggedInUser.role === "Reader") {
+            toast.error("Readers aren't allowed", {
+                duration: 3000,
+                position: "bottom-right",
+            });
             return <Navigate to={"/"} replace />;
         }
     }
