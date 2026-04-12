@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { removeLocalStorage } from "../utils/localStorage";
+import { storage } from "../utils/localStorage";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Navbar = () => {
         userExist && Object.values(loggedInUser).some((p) => p === "Author");
 
     const onLogout = () => {
-        removeLocalStorage("blog-current-user");
+        storage.remove("blog-current-user");
         setLoggedInUser(null);
         toast.success("logout success", {
             duration: 3000,
@@ -28,7 +28,7 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 w-full border-b border-gray-300 shadow-md backdrop-blur-md">
-            <div className="mx-auto flex h-full w-[min(60em,95%)] items-center justify-between">
+            <div className="mx-auto flex h-full w-[min(66em,95%)] items-center justify-between">
                 <div
                     onClick={() => navigate("/")}
                     className="flex items-center gap-1"
@@ -40,7 +40,7 @@ const Navbar = () => {
                     <h1 className="text-2xl font-bold">InkSpire</h1>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 md:gap-4">
                     <div className="inline-flex rounded-lg p-2 transition-colors duration-100 hover:bg-secondary hover:text-white">
                         <Moon size={18} />
                     </div>
@@ -96,13 +96,13 @@ const Navbar = () => {
                         <>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="cursor-pointer rounded-lg px-4 py-2 transition-colors duration-100 hover:bg-secondary hover:text-white"
+                                className="cursor-pointer rounded-lg px-2 py-1 transition-colors duration-100 hover:bg-secondary hover:text-white md:px-4 md:py-2"
                             >
                                 Login
                             </button>
                             <button
                                 onClick={() => navigate("/register")}
-                                className="cursor-pointer rounded-lg bg-primary px-4 py-2 whitespace-nowrap text-white"
+                                className="cursor-pointer rounded-lg bg-primary px-2 py-1 whitespace-nowrap text-white md:px-4 md:py-2"
                             >
                                 Sign up
                             </button>

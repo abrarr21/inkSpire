@@ -1,59 +1,17 @@
 import { Eye, PenLine } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import { useAuth } from "../hooks/useAuth";
-import toast from "react-hot-toast";
-import type { LoginDataType } from "../types";
-import { setLocalStorage } from "../utils/localStorage";
+import { useLogin } from "../hooks/useLogin";
 
 const LoginPage = () => {
     const {
+        navigate,
+        onLoginCommit,
         register,
+        errors,
+        isValid,
         handleSubmit,
-        reset,
-        formState: { errors, isValid },
-    } = useForm<LoginDataType>({
-        mode: "onChange",
-        defaultValues: {
-            createdAt: new Date(),
-        },
-    });
-
-    const navigate = useNavigate();
-    const [showPasswordToggle, setShowPasswordToggle] = useState(false);
-    const { setLoggedInUser, registeredUser } = useAuth();
-
-    const onCommit = (data: LoginDataType) => {
-        const user = registeredUser.find(
-            (p) => p.email === data.email && p.password === data.password,
-        );
-
-        if (!user) {
-            // console.error("user not found");
-            toast.error("Invalid email and password");
-            return;
-        }
-
-        console.log("user found->", user);
-
-        const logUser = {
-            ...data,
-            name: user.name,
-            role: user.role,
-            createdAt: new Date(),
-        };
-
-        // console.log(" log user ->", logUser);
-        setLocalStorage("blog-current-user", logUser);
-        setLoggedInUser(logUser);
-        toast.success("login success", {
-            duration: 2000,
-            position: "bottom-right",
-        });
-        navigate("/");
-        reset();
-    };
+        showPasswordToggle,
+        setShowPasswordToggle,
+    } = useLogin();
 
     return (
         <div className="flex h-full w-full items-center justify-center">
@@ -69,7 +27,7 @@ const LoginPage = () => {
                 </div>
 
                 <form
-                    onSubmit={handleSubmit(onCommit)}
+                    onSubmit={handleSubmit(onLoginCommit)}
                     className="mt-8 flex flex-col gap-6"
                 >
                     {/* Email */}

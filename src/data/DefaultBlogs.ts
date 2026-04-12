@@ -1,4 +1,5 @@
 import type { BlogDataType } from "../types";
+import { formatDate } from "../utils/formDate";
 
 export const blogs: BlogDataType[] = [
     {
@@ -9,8 +10,8 @@ export const blogs: BlogDataType[] = [
         excerpt: "Intro to React basics",
         published: "True",
         tags: ["react", "frontend"],
-        createdAt: new Date().toString().split("T")[0],
-        updatedAt: new Date().toString().split("T")[0],
+        createdAt: formatDate(new Date()),
+        updatedAt: formatDate(new Date()),
     },
     {
         id: "2",
@@ -21,8 +22,8 @@ export const blogs: BlogDataType[] = [
         excerpt: "Learn TypeScript fundamentals",
         published: "True",
         tags: ["typescript", "javascript"],
-        createdAt: new Date().toString().split("T")[0],
-        updatedAt: new Date().toString().split("T")[0],
+        createdAt: formatDate(new Date()),
+        updatedAt: formatDate(new Date()),
     },
     {
         id: "3",
@@ -33,7 +34,7 @@ export const blogs: BlogDataType[] = [
         excerpt: "Cool CSS techniques",
         published: "True",
         tags: ["css", "design"],
-        createdAt: new Date().toString().split("T")[0],
-        updatedAt: new Date().toString().split("T")[0],
+        createdAt: formatDate(new Date()),
+        updatedAt: formatDate(new Date()),
     },
 ];

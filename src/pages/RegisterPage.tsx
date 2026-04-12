@@ -1,55 +1,18 @@
 import { Eye, PenLine } from "lucide-react";
-import { useForm, useWatch } from "react-hook-form";
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "../hooks/useAuth";
-import toast from "react-hot-toast";
-import type { RegisterDataType } from "../types";
-import { setLocalStorage } from "../utils/localStorage";
+import { useRegister } from "../hooks/useRegister";
 
 const RegisterPage = () => {
     const {
+        onRegisterCommit,
+        navigate,
+        showPasswordToggle,
+        setShowPasswordToggle,
+        password,
         register,
         handleSubmit,
-        control,
-        reset,
-        formState: { errors, isValid },
-    } = useForm<RegisterDataType>({
-        mode: "onChange",
-        defaultValues: {
-            createdAt: new Date(),
-        },
-    });
-
-    const { setRegisteredUser, registeredUser, setLoggedInUser } = useAuth();
-    const password = useWatch({ control, name: "password" });
-    const navigate = useNavigate();
-
-    const [showPasswordToggle, setShowPasswordToggle] = useState(false);
-
-    const onCommit = (data: RegisterDataType) => {
-        const createdUser = {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            confirmPassword: data.confirmPassword,
-            role: data.role,
-            createdAt: new Date(),
-        };
-        const newUser = [...registeredUser, createdUser];
-        setLocalStorage("blog-users", newUser);
-        setRegisteredUser(newUser);
-
-        setLocalStorage("blog-current-user", createdUser);
-        setLoggedInUser(createdUser);
-        // console.log(newUser);
-        toast.success("user created", {
-            duration: 2000,
-            position: "bottom-right",
-        });
-        navigate("/");
-        reset();
-    };
+        errors,
+        isValid,
+    } = useRegister();
 
     return (
         <div className="mt-5 mb-5 flex h-full w-full items-center justify-center md:mt-3">
@@ -65,7 +28,7 @@ const RegisterPage = () => {
                 </div>
 
                 <form
-                    onSubmit={handleSubmit(onCommit)}
+                    onSubmit={handleSubmit(onRegisterCommit)}
                     className="mt-8 flex flex-col gap-6"
                 >
                     {/* Name */}

@@ -1,15 +1,17 @@
-export const setLocalStorage = <T>(key: string, value: T) => {
-    return localStorage.setItem(key, JSON.stringify(value));
-};
+export const storage = {
+    set: <T>(key: string, value: T) => {
+        return localStorage.setItem(key, JSON.stringify(value));
+    },
 
-export const getLocalStorage = (key: string) => {
-    return localStorage.getItem(key);
-};
+    get: (key: string) => {
+        const item = localStorage.getItem(key);
 
-export const removeLocalStorage = (key: string) => {
-    return localStorage.removeItem(key);
-};
+        if (item === null) return null;
 
-export const save = (value: string) => {
-    return JSON.parse(value);
+        return JSON.parse(item);
+    },
+
+    remove: (key: string) => {
+        localStorage.removeItem(key);
+    },
 };

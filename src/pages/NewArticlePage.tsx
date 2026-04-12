@@ -1,58 +1,18 @@
 import { ArrowLeft, Save, Send } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
-import type { BlogDataType } from "../types";
-import { v4 as uuidv4 } from "uuid";
-import { useAuth } from "../hooks/useAuth";
-import React, { useState } from "react";
-import { useBlog } from "../hooks/useBlog";
+import { useNewFormBlog } from "../hooks/useNewFormBlog";
 
 const NewArticlePage = () => {
-    const navigate = useNavigate();
-    const { loggedInUser } = useAuth();
-    const { setBlogpost } = useBlog();
-
-    const { register, handleSubmit, reset } = useForm<BlogDataType>();
-
-    const [input, setInput] = useState<string>("");
-    const [tagInput, setTagInput] = useState<string[]>([]);
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-
-            if (tagInput.length > 4) return;
-            if (!input.trim()) return;
-
-            setTagInput((p) => [...p, input.trim()]);
-            setInput("");
-        }
-    };
-
-    const authorName = loggedInUser?.name || "unknown";
-
-    const handleSave = (data: BlogDataType, status: "True" | "False") => {
-        const formData = {
-            ...data,
-            id: uuidv4(),
-            authorName: authorName,
-            tags: tagInput,
-            published: status,
-            updatedAt: new Date().toString().split("T")[0],
-        };
-        // console.log(formData);
-        setBlogpost((p) => [...p, formData]);
-        reset();
-        navigate("/dashboard");
-    };
-
-    const onDraft = (data: BlogDataType) => {
-        handleSave(data, "False");
-    };
-
-    const onPublish = (data: BlogDataType) => {
-        handleSave(data, "True");
-    };
+    const {
+        onPublish,
+        onDraft,
+        navigate,
+        register,
+        handleSubmit,
+        handleKeyDown,
+        input,
+        setInput,
+        tagInput,
+    } = useNewFormBlog();
 
     return (
         <div className="grid grid-rows-[auto_1fr]">

@@ -5,7 +5,7 @@ const AuthProtected = () => {
     const { loggedInUser } = useAuth();
 
     if (loggedInUser) {
-        return <Navigate to={"/"} />;
+        return <Navigate to={"/"} replace />;
     }
     return <Outlet />;
 };

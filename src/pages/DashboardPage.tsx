@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useBlog } from "../hooks/useBlog";
+import toast from "react-hot-toast";
 
 const DashboardPage = () => {
     const navigate = useNavigate();
@@ -37,8 +38,16 @@ const DashboardPage = () => {
     const handlePublish = ({ ...elem }) => {
         const reverser = () => {
             if (elem.published === "True") {
+                toast.success("Post saved to draft", {
+                    duration: 3000,
+                    position: "bottom-right",
+                });
                 return "False";
             }
+            toast.success("Post published", {
+                duration: 3000,
+                position: "bottom-right",
+            });
             return "True";
         };
 
@@ -50,8 +59,7 @@ const DashboardPage = () => {
     };
 
     const handleDelete = (id: string) => {
-        const dlt = authorBlogs.filter((p) => p.id !== id);
-        setBlogpost(dlt);
+        setBlogpost((prev) => prev.filter((p) => p.id !== id));
     };
 
     return (
@@ -85,7 +93,7 @@ const DashboardPage = () => {
 
                 <div className="rounded-xl border border-gray-300 bg-(--bg-whitecanvas) p-6 shadow-md">
                     <h3 className="text-md">Published</h3>
-                    <h2 className="mt-2 text-3xl font-semibold">
+                    <h2 className="mt-2 text-3xl font-semibold text-secondary">
                         {totalPublished}
                     </h2>
                 </div>

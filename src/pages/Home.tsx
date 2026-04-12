@@ -23,7 +23,7 @@ const Home = () => {
                     <h2 className="text-[clamp(1.3rem,4vw,1.5rem)] font-semibold">
                         Latest Articles
                     </h2>
-                    <h4 className="text-sm text-gray-600">
+                    <h4 className="text-sm font-semibold text-gray-600">
                         {publishedBlogs.length} Articles
                     </h4>
                 </div>
